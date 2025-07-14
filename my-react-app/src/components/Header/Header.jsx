@@ -1,16 +1,17 @@
+// my-react-app/src/components/Header/Header.jsx
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { tokenUtils } from "../../services/api";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/slices/authSlice";
 
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const token = tokenUtils.getToken();
-  const user = tokenUtils.getUserData();
-  const isLoggedIn = !!token && !!user;
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    tokenUtils.removeToken();
+    dispatch(logout());
     navigate("/");
   };
 
@@ -25,12 +26,12 @@ function Header() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           // Mode connecté
           <>
             <Link className="main-nav-item" to="/profile">
               <i className="fa-solid fa-circle-user"></i>
-              {user.userName || user.firstName}
+              {user?.userName || user?.firstName}
             </Link>
             <button
               className="main-nav-item"

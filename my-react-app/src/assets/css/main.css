@@ -297,3 +297,255 @@ body {
     width: 200px;
   }
 }
+
+/* Styles pour la page transactions */
+.account-transactions {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.account-info h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.account-balance {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.account-description {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.close-button:hover {
+  opacity: 0.7;
+}
+
+/* Liste des transactions */
+.transactions-list {
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.transactions-header {
+  display: flex;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.transaction-column {
+  flex: 1;
+  padding: 0 0.5rem;
+  text-align: left;
+}
+
+.transaction-column:last-child {
+  flex: 0.3;
+  text-align: center;
+}
+
+.transaction-column:nth-child(3),
+.transaction-column:nth-child(4) {
+  text-align: right;
+}
+
+/* Items de transaction */
+.transaction-item {
+  border-bottom: 1px solid #eee;
+}
+
+.transaction-row {
+  display: flex;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.transaction-row:hover {
+  background-color: #f8f9fa;
+}
+
+.expand-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #00bc77;
+}
+
+/* Détails de transaction */
+.transaction-details {
+  background-color: #00bc77;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.transaction-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.detail-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.detail-value {
+  flex: 1;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.detail-input {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: #333;
+  background-color: #fff;
+  min-width: 150px;
+}
+
+.edit-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.transaction-actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.transaction-actions .edit-button {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #00bc77;
+  border: 1px solid #fff;
+}
+
+.transaction-actions .edit-button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Styles pour le formulaire d'édition */
+.edit-user-info {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+}
+
+.edit-user-info h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .account-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .close-button {
+    align-self: flex-end;
+    margin-top: -2rem;
+  }
+
+  .transactions-header,
+  .transaction-row {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .transaction-column {
+    padding: 0 0.25rem;
+  }
+
+  .transaction-details {
+    padding: 1rem;
+  }
+
+  .transaction-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .detail-value {
+    justify-content: flex-start;
+    margin-top: 0.25rem;
+  }
+
+  .detail-input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .edit-buttons {
+    flex-direction: column;
+  }
+}
+.error-message {
+  color: #d32f2f;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.main.bg-dark.profile-page {
+  background-color: #f5f5f5;
+  display: block;
+  padding: 20px;
+}

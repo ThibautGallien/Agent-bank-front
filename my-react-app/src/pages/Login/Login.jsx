@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, clearError } from "../../store/slices/authSlice";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Checkbox from "../../components/Checkbox/Checkbox";
-import { authAPI, tokenUtils } from "../../services/api";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoading, error, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
+  // Rediriger si déjà connecté
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -22,7 +34,7 @@ function Login() {
       [id]: value,
     }));
     // Supprimer l'erreur quand l'utilisateur tape
-    if (error) setError("");
+    if (error) dispatch(clearError());
   };
 
   const handleCheckboxChange = (e) => {
@@ -34,35 +46,25 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+
+    // Validation côté client
+    if (!formData.email.trim() || !formData.password.trim()) {
+      return;
+    }
 
     try {
-      // Validation côté client
-      if (!formData.email.trim() || !formData.password.trim()) {
-        throw new Error("Please fill in all fields");
-      }
+      const result = await dispatch(
+        loginUser({
+          email: formData.email.trim(),
+          password: formData.password,
+          rememberMe: formData.rememberMe,
+        })
+      ).unwrap();
 
-      // Appel API login
-      const response = await authAPI.login({
-        email: formData.email.trim(),
-        password: formData.password,
-      });
-
-      // Stocker le token de manière sécurisée
-      const token = response.body.token;
-      tokenUtils.setToken(token, formData.rememberMe);
-
-      // Récupérer le profil utilisateur
-      const profileResponse = await authAPI.getProfile(token);
-      tokenUtils.setUserData(profileResponse.body, formData.rememberMe);
-
-      // Redirection vers le profil
-      navigate("/profile");
+      // Si succès, la redirection se fera via useEffect
     } catch (error) {
-      setError(error.message || "An error occurred during login");
-    } finally {
-      setLoading(false);
+      // L'erreur est déjà gérée dans le slice
+      console.error("Login failed:", error);
     }
   };
 
@@ -117,8 +119,8 @@ function Login() {
             onChange={handleCheckboxChange}
             label="Remember me"
           />
-          <Button type="submit" className="sign-in-button" disabled={loading}>
-            {loading ? "Signing In..." : "Sign In"}
+          <Button type="submit" className="sign-in-button" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
       </section>

@@ -1,15 +1,16 @@
+// my-react-app/src/components/ProtectedRoute/ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
-import { tokenUtils } from "../../services/api";
+import { useSelector } from "react-redux";
 
 function ProtectedRoute({ children }) {
-  const token = tokenUtils.getToken();
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  // Si pas de token, rediriger vers login
-  if (!token) {
+  // Si pas authentifié, rediriger vers login
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si token présent, afficher la page demandée
+  // Si authentifié, afficher la page demandée
   return children;
 }
 

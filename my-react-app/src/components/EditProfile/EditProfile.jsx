@@ -1,8 +1,9 @@
+// my-react-app/src/components/EditProfile/EditProfile.jsx
 import { useState } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
-function EditProfile({ user, onSave, onCancel }) {
+function EditProfile({ user, onSave, onCancel, isLoading = false }) {
   const [formData, setFormData] = useState({
     username: user?.username || "",
     firstName: user?.firstName || "",
@@ -50,11 +51,8 @@ function EditProfile({ user, onSave, onCancel }) {
           disabled={true}
         />
         <div className="edit-buttons">
-          <Button type="submit" className="edit-button">
-            Save
-          </Button>
-          <Button type="button" className="edit-button" onClick={onCancel}>
-            Cancel
+          <Button type="submit" className="edit-button" disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save"}
           </Button>
         </div>
       </form>

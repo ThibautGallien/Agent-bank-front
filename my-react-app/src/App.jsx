@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loadFromStorage } from "./store/slices/authSlice";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -8,6 +11,13 @@ import Profile from "./pages/Profile/Profile";
 import "./assets/css/main.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // Charger les données du storage au démarrage
+  useEffect(() => {
+    dispatch(loadFromStorage());
+  }, [dispatch]);
+
   return (
     <Router>
       <div className="App">

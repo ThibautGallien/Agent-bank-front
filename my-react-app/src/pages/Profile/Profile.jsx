@@ -1,22 +1,21 @@
+// my-react-app/src/pages/Profile/Profile.jsx
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserProfile } from "../../store/slices/authSlice";
 import Account from "../../components/Account/Account";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import Button from "../../components/Button/Button";
 
 function Profile() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState({
-    firstName: "Tony",
-    lastName: "Jarvis",
-    username: "Tony",
-  });
+  const dispatch = useDispatch();
+  const { user, isLoading, error } = useSelector((state) => state.auth);
 
-  // Données mockées des comptes
+  // Données mockées des comptes (en attendant la Phase 2)
   const accounts = [
     {
       id: 1,
-      title: "Argent Bank Checking (x8349)",
-      amount: "$2,082.79",
+      title: "Argent Bank Checking (x3448)",
+      amount: "$48,098.43",
       description: "Available Balance",
     },
     {
@@ -33,65 +32,64 @@ function Profile() {
     },
   ];
 
-  const handleEditProfile = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveProfile = (newUserData) => {
-    setUser((prev) => ({
-      ...prev,
-      username: newUserData.username,
-    }));
-    setIsEditing(false);
-    // TODO: API call to update profile
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
+  const handleSaveProfile = async (newUserData) => {
+    try {
+      await dispatch(
+        updateUserProfile({
+          userName: newUserData.username,
+        })
+      ).unwrap();
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
   };
 
   const handleViewTransactions = (accountId) => {
     console.log("View transactions for account:", accountId);
-    // TODO: Navigation vers page transactions
+    // Navigation vers page transactions
+    window.location.href = `/profile/account/${accountId}/transactions`;
   };
 
+  if (!user) {
+    return (
+      <main className="main bg-dark">
+        <div className="header">
+          <h1>Loading...</h1>
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <main className="main bg-dark">
+    <main className="main bg-dark profile-page">
       <div className="header">
-        {isEditing ? (
-          <EditProfile
-            user={user}
-            onSave={handleSaveProfile}
-            onCancel={handleCancelEdit}
-          />
-        ) : (
-          <>
-            <h1>
-              Welcome back
-              <br />
-              {user.firstName} {user.lastName}!
-            </h1>
-            <Button className="edit-button" onClick={handleEditProfile}>
-              Edit Name
-            </Button>
-          </>
-        )}
+        {error && <div className="error-message">{error}</div>}
+
+        {/* Formulaire d'édition directement affiché */}
+        <EditProfile
+          user={{
+            username: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          }}
+          onSave={handleSaveProfile}
+          isLoading={isLoading}
+        />
       </div>
 
-      {!isEditing && (
-        <>
-          <h2 className="sr-only">Accounts</h2>
-          {accounts.map((account) => (
-            <Account
-              key={account.id}
-              title={account.title}
-              amount={account.amount}
-              description={account.description}
-              onViewTransactions={() => handleViewTransactions(account.id)}
-            />
-          ))}
-        </>
-      )}
+      {/* Liste des comptes toujours affichée */}
+      <>
+        <h2 className="sr-only">Accounts</h2>
+        {accounts.map((account) => (
+          <Account
+            key={account.id}
+            title={account.title}
+            amount={account.amount}
+            description={account.description}
+            onViewTransactions={() => handleViewTransactions(account.id)}
+          />
+        ))}
+      </>
     </main>
   );
 }
