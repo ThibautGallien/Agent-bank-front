@@ -27,26 +27,22 @@ function Header() {
       </Link>
       <div>
         {isAuthenticated ? (
-          // Mode connecté
+          // Mode connecté : [Nom] [Profile] [Settings] [Logout]
           <>
+            <span className="main-nav-item user-name">
+              {user?.userName || user?.firstName}
+            </span>
             <Link className="main-nav-item" to="/profile">
               <i className="fa-solid fa-circle-user"></i>
-              {user?.userName || user?.firstName}
             </Link>
+            <button className="main-nav-item settings-button">
+              <i className="fa-solid fa-cog"></i>
+            </button>
             <button
-              className="main-nav-item"
+              className="main-nav-item logout-button"
               onClick={handleLogout}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#2c3e50",
-                fontWeight: "bold",
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
             >
-              <i className="fa-solid fa-arrow-right-from-bracket"></i>
-              Sign Out
+              <i className="fa-solid fa-power-off"></i>
             </button>
           </>
         ) : (

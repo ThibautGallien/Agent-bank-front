@@ -1,3 +1,11 @@
+/* =========================================
+   ARGENT BANK - STYLES PRINCIPAUX
+   ========================================= */
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+
 html {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,31 +25,24 @@ body {
   flex: 1;
 }
 
-.bg-dark {
-  background-color: #12002b;
-}
-
-.main.bg-dark {
-  padding-top: 20px;
-  padding-bottom: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Utilitaire pour masquer visuellement les éléments (accessibilité) */
 .sr-only {
   border: 0 !important;
-  clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+  clip: rect(1px, 1px, 1px, 1px) !important;
   -webkit-clip-path: inset(50%) !important;
-  clip-path: inset(50%) !important; /* 2 */
+  clip-path: inset(50%) !important;
   height: 1px !important;
   margin: -1px !important;
   overflow: hidden !important;
   padding: 0 !important;
   position: absolute !important;
   width: 1px !important;
-  white-space: nowrap !important; /* 3 */
+  white-space: nowrap !important;
 }
+
+/* =========================================
+   NAVIGATION HEADER
+   ========================================= */
 
 .main-nav {
   display: flex;
@@ -78,6 +79,81 @@ body {
   width: 200px;
 }
 
+/* Styles pour le header avec utilisateur connecté */
+.user-name {
+  font-weight: bold;
+  color: #2c3e50;
+  cursor: default;
+  line-height: 1; /* Contrôle la hauteur de ligne */
+}
+
+.settings-button,
+.logout-button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  color: #61b37b; /* Vert comme le thème */
+  text-decoration: none;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  font-size: 3rem; /* Icônes beaucoup plus grandes */
+  line-height: 1; /* Empêche l'icône de pousser le header vers le bas */
+  display: flex;
+  align-items: center; /* Centre l'icône verticalement */
+  height: 24px; /* Hauteur fixe pour l'alignement */
+}
+
+.settings-button:hover,
+.logout-button:hover {
+  color: #4a9960; /* Vert plus foncé au hover */
+  text-decoration: none;
+}
+
+/* Icône de profil plus grande et verte aussi */
+.main-nav-item {
+  display: flex;
+  align-items: center; /* Centre l'icône et le texte */
+  line-height: 1;
+}
+
+.main-nav-item:hover {
+  text-decoration: none; /* Pas d'underline pour l'icône profile */
+}
+
+.main-nav-item i {
+  color: #61b37b;
+  font-size: 3rem; /* Icônes beaucoup plus grandes */
+  line-height: 1;
+  margin-right: 0.5rem; /* Espace entre l'icône et le texte */
+}
+
+.main-nav-item:hover i {
+  color: #4a9960;
+}
+
+/* Assurer que tous les éléments du nav sont alignés */
+.main-nav > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px; /* Hauteur fixe pour le container */
+}
+
+/* Alignement avec le bord des comptes bancaires */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  max-width: 1200px; /* Même largeur max que les comptes */
+  margin: 0 auto; /* Centré comme les comptes */
+  width: 90%; /* Même largeur que .account-transactions */
+}
+
+/* =========================================
+   HOME PAGE - HERO SECTION
+   ========================================= */
+
 .hero {
   background-image: url("/bank-tree.jpeg");
   background-position: 0 -50px;
@@ -108,6 +184,7 @@ body {
   font-size: 0.9rem;
 }
 
+/* Hero responsive */
 @media (min-width: 920px) {
   .hero {
     height: 400px;
@@ -131,27 +208,25 @@ body {
   }
 }
 
+/* =========================================
+   HOME PAGE - FEATURES SECTION
+   ========================================= */
+
 .features {
   display: flex;
   flex-direction: column;
 }
 
-@media (min-width: 920px) {
-  .features {
-    flex-direction: row;
-  }
+.feature-item {
+  flex: 1;
+  padding: 2.5rem;
 }
 
 .feature-icon {
   width: 100px;
-  border: 10px solid #00bc77;
+  border: 10px solid #61b37b;
   border-radius: 50%;
   padding: 1rem;
-}
-
-.feature-item {
-  flex: 1;
-  padding: 2.5rem;
 }
 
 .feature-item-title {
@@ -161,16 +236,39 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.sign-in-button {
+/* Features responsive */
+@media (min-width: 920px) {
+  .features {
+    flex-direction: row;
+  }
+}
+
+/* =========================================
+   LOGIN PAGE
+   ========================================= */
+
+/* Classe utilitaire pour fond sombre */
+.bg-dark {
+  background-color: #12002b;
+}
+
+/* Fond sombre UNIQUEMENT pour la page de login */
+.main.bg-dark.login-page {
+  background-color: #12002b;
+  padding-top: 20px;
+  padding-bottom: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+/* Fond gris clair pour la page profile */
+.main.profile-page {
+  background-color: #f5f5f5;
   display: block;
-  width: 100%;
-  padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
+  padding: 20px;
+  min-height: 80vh;
 }
 
 .sign-in-content {
@@ -186,13 +284,27 @@ body {
   font-size: 5rem;
 }
 
-.input-remember {
-  display: flex;
+.sign-in-button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #61b37b;
+  background-color: #61b37b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
-.input-remember label {
-  margin-left: 0.25rem;
+.sign-in-button:hover {
+  background-color: #008f5a;
 }
+
+/* =========================================
+   FORMULAIRES
+   ========================================= */
 
 .input-wrapper {
   display: flex;
@@ -210,48 +322,92 @@ body {
   font-size: 1.2rem;
 }
 
-.footer {
+.input-remember {
   display: flex;
-  justify-content: center;
-  border-top: 2px solid #ccc;
-  padding: 2rem 0 1.5rem;
 }
 
-.footer-text {
-  margin: 0;
-  padding: 0;
+.input-remember label {
+  margin-left: 0.25rem;
 }
+
+/* =========================================
+   PROFILE PAGE
+   ========================================= */
+
+/* Header de la page profile */
+.header {
+  color: #2c3e50; /* Texte sombre sur fond clair */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Formulaire d'édition utilisateur */
+.edit-user-info {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+}
+
+.edit-user-info h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.edit-button {
+  border-color: #61b37b;
+  background-color: #61b37b;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.edit-button:hover {
+  background-color: #008f5a;
+}
+
+.edit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   COMPTES BANCAIRES
+   ========================================= */
 
 .account {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid black;
-  background-color: #fff;
+  background-color: #3d3d3d; /* Fond sombre */
+  color: #fff; /* Texte blanc */
   width: 80%;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto; /* Empilés verticalement */
   flex-direction: column;
   padding: 1.5rem;
   box-sizing: border-box;
   text-align: left;
-  margin-bottom: 2rem;
-}
-
-.account-amount {
-  margin: 0;
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.account-amount-description {
-  margin: 0;
-}
-
-.account-title {
-  margin: 0;
-  padding: 0;
-  font-size: 1rem;
-  font-weight: normal;
 }
 
 .account-content-wrapper {
@@ -259,31 +415,44 @@ body {
   flex: 1;
 }
 
-.edit-button {
-  border-color: #00bc77;
-  background-color: #00bc77;
+.account-title {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: normal;
   color: #fff;
+}
+
+.account-amount {
+  margin: 0;
+  font-size: 2.5rem;
   font-weight: bold;
-  padding: 10px;
-}
-
-.header {
   color: #fff;
-  margin-bottom: 2rem;
 }
 
+.account-amount-description {
+  margin: 0;
+  color: #fff;
+}
+
+/* Bouton flèche pour voir les transactions */
 .transaction-button {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  border-color: #00bc77;
-  background-color: #00bc77;
+  background: none;
+  border: none;
   color: #fff;
+  font-size: 4rem;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.transaction-button:hover {
+  opacity: 0.8;
+}
+
+/* Comptes responsive */
 @media (min-width: 720px) {
   .account {
     flex-direction: row;
@@ -294,11 +463,15 @@ body {
   }
 
   .transaction-button {
-    width: 200px;
+    width: auto;
+    min-width: 50px;
   }
 }
 
-/* Styles pour la page transactions */
+/* =========================================
+   PAGE TRANSACTIONS
+   ========================================= */
+
 .account-transactions {
   width: 90%;
   max-width: 1200px;
@@ -306,11 +479,12 @@ body {
   padding: 0 1rem;
 }
 
+/* Header d'un compte spécifique */
 .account-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2c3e50;
+  background-color: #3d3d3d;
   color: #fff;
   padding: 1.5rem;
   margin-bottom: 1rem;
@@ -342,6 +516,10 @@ body {
   padding: 0.5rem;
 }
 
+.close-button i {
+  font-size: 2.5rem; /* Icône de fermeture plus grande */
+}
+
 .close-button:hover {
   opacity: 0.7;
 }
@@ -355,7 +533,7 @@ body {
 
 .transactions-header {
   display: flex;
-  background-color: #00bc77;
+  background-color: #61b37b;
   color: #fff;
   font-weight: bold;
   padding: 1rem;
@@ -377,7 +555,7 @@ body {
   text-align: right;
 }
 
-/* Items de transaction */
+/* Items de transaction individuels */
 .transaction-item {
   border-bottom: 1px solid #eee;
 }
@@ -398,19 +576,18 @@ body {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  color: #00bc77;
+  color: #61b37b;
 }
 
-/* Détails de transaction */
+/* Détails de transaction (zone dépliable) - CORRIGÉ */
 .transaction-details {
-  background-color: #00bc77;
+  background-color: #61b37b;
   color: #fff;
   padding: 1rem 2rem;
 }
 
 .transaction-detail-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
   padding: 0.5rem 0;
@@ -418,7 +595,9 @@ body {
 
 .detail-label {
   font-weight: bold;
-  min-width: 120px;
+  width: 120px; /* Largeur fixe au lieu de min-width */
+  flex-shrink: 0; /* Empêche le rétrécissement */
+  text-align: left;
 }
 
 .detail-value {
@@ -427,6 +606,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+/* Valeur alignée avec la colonne Description (2ème colonne) - CORRIGÉ */
+.detail-value-aligned {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 140px;
 }
 
 .detail-input {
@@ -439,12 +628,18 @@ body {
   min-width: 150px;
 }
 
+/* Icône de crayon blanche */
 .edit-icon {
   background: none;
   border: none;
   cursor: pointer;
   margin-left: 0.5rem;
   font-size: 0.9rem;
+  color: #fff; /* Crayon blanc */
+}
+
+.edit-icon:hover {
+  opacity: 0.8;
 }
 
 .transaction-actions {
@@ -465,32 +660,42 @@ body {
   background-color: #f8f9fa;
 }
 
-/* Styles pour le formulaire d'édition */
-.edit-user-info {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 5px;
-  margin-bottom: 2rem;
-  color: #2c3e50;
-  max-width: 400px;
-  margin: 0 auto 2rem auto;
-}
+/* =========================================
+   FOOTER
+   ========================================= */
 
-.edit-user-info h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
-}
-
-.edit-buttons {
+.footer {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
 }
 
-/* Responsive */
+.footer-text {
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================
+   MESSAGES D'ERREUR
+   ========================================= */
+
+.error-message {
+  color: #d32f2f;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   RESPONSIVE - MOBILE
+   ========================================= */
+
 @media (max-width: 768px) {
+  /* Header des comptes en mobile */
   .account-header {
     flex-direction: column;
     text-align: center;
@@ -501,6 +706,7 @@ body {
     margin-top: -2rem;
   }
 
+  /* Transactions en mobile */
   .transactions-header,
   .transaction-row {
     font-size: 0.9rem;
@@ -515,15 +721,24 @@ body {
     padding: 1rem;
   }
 
+  /* Détails responsive - CORRIGÉ */
   .transaction-detail-row {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 1rem;
   }
 
-  .detail-value {
+  .detail-label {
+    width: auto;
+    margin-bottom: 0.25rem;
+  }
+
+  .detail-value,
+  .detail-value-aligned {
+    margin-left: 0;
     justify-content: flex-start;
     margin-top: 0.25rem;
+    width: 100%;
   }
 
   .detail-input {
@@ -531,21 +746,17 @@ body {
     max-width: none;
   }
 
+  /* Boutons d'édition en mobile */
   .edit-buttons {
     flex-direction: column;
   }
-}
-.error-message {
-  color: #d32f2f;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  background-color: #ffebee;
-  border: 1px solid #ffcdd2;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-.main.bg-dark.profile-page {
-  background-color: #f5f5f5;
-  display: block;
-  padding: 20px;
+
+  /* Header responsive pour utilisateur connecté */
+  .main-nav > div {
+    gap: 0.25rem;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+  }
 }

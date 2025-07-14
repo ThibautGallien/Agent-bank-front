@@ -69,15 +69,7 @@ function Login() {
   };
 
   return (
-    <main
-      className="main bg-dark"
-      style={{
-        minHeight: "80vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <main className="main bg-dark login-page">
       <section className="sign-in-content">
         <i className="fa-solid fa-circle-user sign-in-icon"></i>
         <h1>Sign In</h1>

@@ -23,6 +23,11 @@ function EditProfile({ user, onSave, onCancel, isLoading = false }) {
     onSave(formData);
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    onCancel();
+  };
+
   return (
     <div className="edit-user-info">
       <h2>Edit user info</h2>
@@ -53,6 +58,14 @@ function EditProfile({ user, onSave, onCancel, isLoading = false }) {
         <div className="edit-buttons">
           <Button type="submit" className="edit-button" disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
+          </Button>
+          <Button
+            type="button"
+            className="edit-button"
+            onClick={handleCancel}
+            disabled={isLoading}
+          >
+            Cancel
           </Button>
         </div>
       </form>

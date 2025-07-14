@@ -1,14 +1,14 @@
 // my-react-app/src/pages/Profile/Profile.jsx
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { updateUserProfile } from "../../store/slices/authSlice";
 import Account from "../../components/Account/Account";
 import EditProfile from "../../components/EditProfile/EditProfile";
-import Button from "../../components/Button/Button";
 
 function Profile() {
   const dispatch = useDispatch();
-  const { user, isLoading, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   // Données mockées des comptes (en attendant la Phase 2)
   const accounts = [
@@ -44,15 +44,17 @@ function Profile() {
     }
   };
 
+  const handleCancelEdit = () => {
+    console.log("Cancel clicked");
+  };
+
   const handleViewTransactions = (accountId) => {
-    console.log("View transactions for account:", accountId);
-    // Navigation vers page transactions
-    window.location.href = `/profile/account/${accountId}/transactions`;
+    navigate(`/profile/account/${accountId}/transactions`);
   };
 
   if (!user) {
     return (
-      <main className="main bg-dark">
+      <main className="main profile-page">
         <div className="header">
           <h1>Loading...</h1>
         </div>
@@ -61,11 +63,8 @@ function Profile() {
   }
 
   return (
-    <main className="main bg-dark profile-page">
+    <main className="main profile-page">
       <div className="header">
-        {error && <div className="error-message">{error}</div>}
-
-        {/* Formulaire d'édition directement affiché */}
         <EditProfile
           user={{
             username: user.userName,
@@ -73,11 +72,11 @@ function Profile() {
             lastName: user.lastName,
           }}
           onSave={handleSaveProfile}
+          onCancel={handleCancelEdit}
           isLoading={isLoading}
         />
       </div>
 
-      {/* Liste des comptes toujours affichée */}
       <>
         <h2 className="sr-only">Accounts</h2>
         {accounts.map((account) => (

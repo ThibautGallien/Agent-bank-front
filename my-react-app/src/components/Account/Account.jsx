@@ -1,5 +1,4 @@
-import Button from "../Button/Button";
-
+// my-react-app/src/components/Account/Account.jsx
 function Account({ title, amount, description, onViewTransactions }) {
   return (
     <section className="account">
@@ -9,9 +8,13 @@ function Account({ title, amount, description, onViewTransactions }) {
         <p className="account-amount-description">{description}</p>
       </div>
       <div className="account-content-wrapper cta">
-        <Button className="transaction-button" onClick={onViewTransactions}>
-          View transactions
-        </Button>
+        <button
+          className="transaction-button"
+          onClick={onViewTransactions}
+          aria-label="View transactions"
+        >
+          <i className="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
     </section>
   );
