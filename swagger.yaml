@@ -1,0 +1,375 @@
+swagger: "2.0"
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Login Successfully
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Signup Successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+  /user/profile:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      responses:
+        "200":
+          description: User profile retrieved successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: "#/definitions/UserProfile"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: User profile updated successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+  /accounts/{accountId}/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Get account transactions
+      description: API for retrieving all transactions for a specific account
+      parameters:
+        - in: path
+          name: accountId
+          description: Account ID
+          required: true
+          type: string
+        - in: query
+          name: month
+          description: Month filter (format YYYY-MM)
+          required: false
+          type: string
+          pattern: "^[0-9]{4}-[0-9]{2}$"
+        - in: query
+          name: limit
+          description: Maximum number of transactions to return
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transactions retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Transactions retrieved successfully"
+              body:
+                type: array
+                items:
+                  $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid account ID or query parameters
+        "401":
+          description: Unauthorized - Invalid or missing token
+        "403":
+          description: Forbidden - User doesn't have access to this account
+        "404":
+          description: Account not found
+        "500":
+          description: Internal Server Error
+  /accounts/{accountId}/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Get transaction details
+      description: API for retrieving details of a specific transaction
+      parameters:
+        - in: path
+          name: accountId
+          description: Account ID
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Transaction details retrieved successfully"
+              body:
+                $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid account ID or transaction ID
+        "401":
+          description: Unauthorized - Invalid or missing token
+        "403":
+          description: Forbidden - User doesn't have access to this account
+        "404":
+          description: Account or transaction not found
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Update transaction information
+      description: API for updating transaction category and note (only editable fields)
+      parameters:
+        - in: path
+          name: accountId
+          description: Account ID
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction update payload
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction updated successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Transaction updated successfully"
+              body:
+                $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid account ID, transaction ID, or request body
+        "401":
+          description: Unauthorized - Invalid or missing token
+        "403":
+          description: Forbidden - User doesn't have access to this account
+        "404":
+          description: Account or transaction not found
+        "500":
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+      userName:
+        type: string
+        description: user public name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      userName:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Transaction unique identifier
+        example: "transaction-123"
+      date:
+        type: string
+        format: date
+        description: Transaction date
+        example: "2020-02-27"
+      description:
+        type: string
+        description: Transaction description
+        example: "Golden Sun Bakery"
+      amount:
+        type: number
+        format: float
+        description: Transaction amount
+        example: 8.00
+      balance:
+        type: number
+        format: float
+        description: Account balance after transaction
+        example: 298.00
+      transactionType:
+        type: string
+        description: Type of transaction
+        example: "Electronic"
+        enum:
+          - Electronic
+          - Cash
+          - Check
+          - Transfer
+      category:
+        type: string
+        description: Transaction category (editable)
+        example: "Food"
+        enum:
+          - Food
+          - Shopping
+          - Transport
+          - Entertainment
+          - Bills
+          - Other
+      note:
+        type: string
+        description: Transaction note (editable)
+        example: "lorem ipsum"
+        maxLength: 255
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Transaction category
+        enum:
+          - Food
+          - Shopping
+          - Transport
+          - Entertainment
+          - Bills
+          - Other
+      note:
+        type: string
+        description: Transaction note
+        maxLength: 255
