@@ -263,7 +263,7 @@ body {
   min-height: 80vh;
 }
 
-/* Fond gris clair pour la page profile */
+/* Fond gris clair pour les pages profile et user */
 .main.profile-page {
   background-color: #f5f5f5;
   display: block;
@@ -331,10 +331,10 @@ body {
 }
 
 /* =========================================
-   PROFILE PAGE
+   USER & PROFILE PAGES
    ========================================= */
 
-/* Header de la page profile */
+/* Header des pages user et profile */
 .header {
   color: #2c3e50; /* Texte sombre sur fond clair */
   margin-bottom: 2rem;
@@ -345,9 +345,32 @@ body {
   color: #2c3e50;
   font-size: 2rem;
   margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
-/* Formulaire d'édition utilisateur */
+/* Bouton Edit Name sur la page User */
+.header .edit-button {
+  border-color: #61b37b;
+  background-color: #61b37b;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 1rem;
+}
+
+.header .edit-button:hover {
+  background-color: #008f5a;
+}
+
+.header .edit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Formulaire d'édition utilisateur sur la page Profile */
 .edit-user-info {
   background-color: white;
   padding: 2rem;

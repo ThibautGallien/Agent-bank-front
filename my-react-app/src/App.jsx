@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import User from "./pages/User/User";
 import Profile from "./pages/Profile/Profile";
 import Transactions from "./pages/Transactions/Transactions";
 import "./assets/css/main.css";
@@ -27,6 +28,14 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route
+              path="/user"
+              element={
+                <ProtectedRoute>
+                  <User />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/profile"
               element={

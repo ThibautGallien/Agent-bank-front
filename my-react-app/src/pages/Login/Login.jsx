@@ -23,7 +23,7 @@ function Login() {
   // Rediriger si déjà connecté
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/profile");
+      navigate("/user");
     }
   }, [isAuthenticated, navigate]);
 

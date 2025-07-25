@@ -1,4 +1,3 @@
-// my-react-app/src/components/Header/Header.jsx
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/slices/authSlice";
@@ -10,9 +9,13 @@ function Header() {
 
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -27,15 +30,18 @@ function Header() {
       </Link>
       <div>
         {isAuthenticated ? (
-          // Mode connecté : [Nom] [Profile] [Settings] [Logout]
+          // Mode connecté : [Nom] [User] [Profile] [Logout]
           <>
             <span className="main-nav-item user-name">
               {user?.userName || user?.firstName}
             </span>
-            <Link className="main-nav-item" to="/profile">
+            <Link className="main-nav-item" to="/user">
               <i className="fa-solid fa-circle-user"></i>
             </Link>
-            <button className="main-nav-item settings-button">
+            <button
+              className="main-nav-item settings-button"
+              onClick={handleProfileClick}
+            >
               <i className="fa-solid fa-cog"></i>
             </button>
             <button
